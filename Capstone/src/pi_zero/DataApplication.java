@@ -13,8 +13,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class DataApplication 
 {
-	private TransferTimer timer;
 	private final String FILENAME = "C:\\Users\\Sam\\Desktop\\capstone_workspace_package\\Capstone\\data\\Data.txt";
+	private final int SLEEP_TIME = 5;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
 	
@@ -69,8 +69,6 @@ public class DataApplication
 				ex.printStackTrace();
 			}
 		}
-		
-		printData();
 	}
 	
 	void printData()
@@ -84,51 +82,68 @@ public class DataApplication
 			
 			System.out.println();
 		}
-		
-		timer = new TransferTimer(5);
-		
-		while (true)
-		{
-			
-		}
 	}
 	
-	public void start()
+	void start()
 	{
-		MemoryPersistence persistence = new MemoryPersistence();
-		
-		int qos = 2;
-		
 		String topic = "MQTT Examples";
 		String content = "Message from MqttPublishSample";
 		String broker = "tcp://iot.eclipse.org:1883";
 		String clientId = "JavaSample";
 
-		try 
-        {
-            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            System.out.println("Connecting to broker: "+broker);
-            sampleClient.connect(connOpts);
-            System.out.println("Connected");
-            System.out.println("Publishing message: "+content);
-            MqttMessage message = new MqttMessage(content.getBytes());
-            message.setQos(qos);
-            sampleClient.publish(topic, message);
-            System.out.println("Message published");
-            sampleClient.disconnect();
-            System.out.println("Disconnected");
-            System.exit(0);
-        } 
-        catch(MqttException me)
-        {
-            System.out.println("reason "+me.getReasonCode());
-            System.out.println("msg "+me.getMessage());
-            System.out.println("loc "+me.getLocalizedMessage());
-            System.out.println("cause "+me.getCause());
-            System.out.println("excep "+me);
-            me.printStackTrace();
-        }
+		MemoryPersistence persistence = new MemoryPersistence();
+		
+		int qos = 2;
+
+		for (int currentRow = 0; currentRow < ROW_COUNT; currentRow++) 
+		{
+			for (int currentCol = 0; currentCol < COLUMN_COUNT; currentCol++) 
+			{
+				content = allData[currentRow][currentCol] + "";
+
+				try 
+				{
+					MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+					MqttConnectOptions connOpts = new MqttConnectOptions();
+					MqttMessage message = new MqttMessage(content.getBytes());
+
+					connOpts.setCleanSession(true);
+
+					System.out.println("Connecting to broker: " + broker);
+					sampleClient.connect(connOpts);
+					System.out.println("Connected");
+
+					System.out.println("Publishing message: " + content);
+					message.setQos(qos);
+					sampleClient.publish(topic, message);
+					System.out.println("Message published");
+
+					if (currentRow == ROW_COUNT - 1 && currentCol == COLUMN_COUNT - 1)
+					{
+						sampleClient.disconnect();
+						System.out.println("Disconnected");
+						System.exit(0);
+					}
+				} 
+				catch (MqttException me) 
+				{
+					System.out.println("reason " + me.getReasonCode());
+					System.out.println("msg " + me.getMessage());
+					System.out.println("loc " + me.getLocalizedMessage());
+					System.out.println("cause " + me.getCause());
+					System.out.println("excep " + me);
+					me.printStackTrace();
+				}
+
+				try
+				{
+					Thread.sleep(SLEEP_TIME * 1000);
+				} 
+				catch(InterruptedException ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+		}
 	}
 }
