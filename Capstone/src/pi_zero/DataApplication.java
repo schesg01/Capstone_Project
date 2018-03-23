@@ -13,7 +13,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class DataApplication 
 {
-	private final String FILENAME = "C:\\Users\\Sam\\Desktop\\capstone_workspace_package\\Capstone\\data\\Data.txt";
+	//private final String FILENAME = "C:\\Users\\Sam\\Desktop\\capstone_workspace_package\\Capstone\\data\\Data.txt";
+	private final String FILENAME = "./data/data.txt";
 	private final int SLEEP_TIME = 5;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
@@ -88,8 +89,7 @@ public class DataApplication
 	{
 		String topic = "Transfer_Data";
 		String content = "Test Message";
-		//String broker = "tcp://iot.eclipse.org:1883";
-		String broker = "tcp://192.168.22.1:1883";
+		String broker = "tcp://192.168.0.111:1883";
 		String clientId = "Transfer_Speed_Test";
 
 		MemoryPersistence persistence = new MemoryPersistence();
@@ -100,10 +100,8 @@ public class DataApplication
 		{
 			for (int currentCol = 0; currentCol < COLUMN_COUNT; currentCol++) 
 			{
-				//content = allData[currentRow][currentCol] + "";
+				content = allData[currentRow][currentCol] + "";
 				
-				content = "Test Message";
-
 				try 
 				{
 					MqttConnectOptions connOpts = new MqttConnectOptions();
