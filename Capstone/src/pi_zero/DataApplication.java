@@ -86,10 +86,11 @@ public class DataApplication
 	
 	void start()
 	{
-		String topic = "MQTT Examples";
-		String content = "Message from MqttPublishSample";
-		String broker = "tcp://iot.eclipse.org:1883";
-		String clientId = "JavaSample";
+		String topic = "Transfer_Data";
+		String content = "Test Message";
+		//String broker = "tcp://iot.eclipse.org:1883";
+		String broker = "tcp://192.168.22.1:1883";
+		String clientId = "Transfer_Speed_Test";
 
 		MemoryPersistence persistence = new MemoryPersistence();
 		
@@ -99,12 +100,14 @@ public class DataApplication
 		{
 			for (int currentCol = 0; currentCol < COLUMN_COUNT; currentCol++) 
 			{
-				content = allData[currentRow][currentCol] + "";
+				//content = allData[currentRow][currentCol] + "";
+				
+				content = "Test Message";
 
 				try 
 				{
-					MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
 					MqttConnectOptions connOpts = new MqttConnectOptions();
+					MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
 					MqttMessage message = new MqttMessage(content.getBytes());
 
 					connOpts.setCleanSession(true);
