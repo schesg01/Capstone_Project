@@ -14,7 +14,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 public class DataApplication 
 {
 	private final String FILENAME = "./data/data.txt";
-	private int sleepTime = 5;
+	private int sleepTime = 0;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
 	
