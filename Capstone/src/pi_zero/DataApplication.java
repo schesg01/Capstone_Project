@@ -13,16 +13,16 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class DataApplication 
 {
-	//private final String FILENAME = "C:\\Users\\Sam\\Desktop\\capstone_workspace_package\\Capstone\\data\\Data.txt";
 	private final String FILENAME = "./data/data.txt";
-	private final int SLEEP_TIME = 5;
+	private int sleepTime = 5;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
 	
 	private int[][] allData = new int[ROW_COUNT][COLUMN_COUNT];
 	
-	public DataApplication()
+	public DataApplication(int time)
 	{
+		sleepTime = time;
 		obtainTestData();
 	}
 	
@@ -138,7 +138,7 @@ public class DataApplication
 
 				try
 				{
-					Thread.sleep(SLEEP_TIME * 1000);
+					Thread.sleep(sleepTime * 1000);
 				} 
 				catch(InterruptedException ex)
 				{
