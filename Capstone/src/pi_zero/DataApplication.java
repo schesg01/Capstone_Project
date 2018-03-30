@@ -13,6 +13,7 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
 public class DataApplication 
 {
+	private Clock clock = null;
 	private final String FILENAME = "./data/data.txt";
 	private int sleepTime = 0;
 	private final int COLUMN_COUNT = 3;
@@ -22,6 +23,7 @@ public class DataApplication
 	
 	public DataApplication(int time)
 	{
+		clock = new Clock();
 		sleepTime = time;
 		obtainTestData();
 	}
@@ -96,6 +98,8 @@ public class DataApplication
 		
 		int qos = 2;
 
+		clock.restart();
+		
 		for (int currentRow = 0; currentRow < ROW_COUNT; currentRow++) 
 		{
 			for (int currentCol = 0; currentCol < COLUMN_COUNT; currentCol++) 
@@ -105,26 +109,29 @@ public class DataApplication
 				try 
 				{
 					MqttConnectOptions connOpts = new MqttConnectOptions();
-					MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
+					MqttClient client = new MqttClient(broker, clientId, persistence);
 					MqttMessage message = new MqttMessage(content.getBytes());
 
 					connOpts.setCleanSession(true);
 
 					System.out.println("Connecting to broker: " + broker);
-					sampleClient.connect(connOpts);
+					client.connect(connOpts);
 					System.out.println("Connected");
 
 					System.out.println("Publishing message: " + content);
 					message.setQos(qos);
-					sampleClient.publish(topic, message);
+					client.publish(topic, message);
 					System.out.println("Message published");
 
 					if (currentRow == ROW_COUNT - 1 && currentCol == COLUMN_COUNT - 1)
 					{
-						sampleClient.disconnect();
+						client.disconnect();
 						System.out.println("Disconnected");
 						System.exit(0);
 					}
+					
+					System.out.println("Nano:\t" + clock.getElapsedNanoTime());
+					System.out.println("milli:\t" + clock.getElapsedMiliTime());
 				} 
 				catch (MqttException me) 
 				{
