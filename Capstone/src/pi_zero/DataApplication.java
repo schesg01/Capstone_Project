@@ -20,9 +20,9 @@ public class DataApplication
 	private int sleepTime = 0;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
-	private String certificateSigningRequestPath = "client.csr";
-	private String clientKeyFilePath = "client.key";
-	private String clientCertificateFilePath = "client.crt";
+	private String certificateSigningRequestPath = "./certs/client.csr";
+	private String clientKeyFilePath = "./certs/client.key";
+	private String clientCertificateFilePath = "./certs/client.crt";
 	private String password = "password";
 	
 	private int[][] allData = new int[ROW_COUNT][COLUMN_COUNT];
