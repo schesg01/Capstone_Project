@@ -49,7 +49,8 @@ public class SSLFactory
 		{
 			System.out.println("Encrypted key - we will use provided password");
 			key = converter.getKeyPair(((PEMEncryptedKeyPair) object).decryptKeyPair(decProv));
-		} else
+		} 
+		else
 		{
 			System.out.println("Unencrypted key - no password needed");
 			key = converter.getKeyPair((PEMKeyPair) object);

@@ -9,7 +9,7 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
-		// By default, sleepTime is set to 3 second
+		// By default, sleepTime is set to 3 seconds
 		int sleepTime = 3; 
 		
 		if (args[0] != null)
