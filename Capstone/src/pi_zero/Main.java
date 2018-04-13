@@ -9,12 +9,19 @@ public class Main
 	 */
 	public static void main(String[] args) 
 	{
-		if (Integer.parseInt(args[1]) == 1)
+		// By default, sleepTime is set to 3 second
+		int sleepTime = 3; 
+		
+		if (args[0] != null)
+		{
+			sleepTime = Integer.parseInt(args[0]);
+		}
+
+		// By default, do not generate test data
+		if (args[1] != null && Integer.parseInt(args[1]) == 1)
 		{
 			generateTestData();
 		}
-
-		int sleepTime = Integer.parseInt(args[0]);
 		
 		DataApplication application = new DataApplication(sleepTime);
 		application.start();
