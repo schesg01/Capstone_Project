@@ -9,5 +9,10 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.paho.sample.mqttv3app"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.paho.sample.utility"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.paho.ui.core"/>
+	<classpathentry kind="lib" path="bcprov-ext-jdk15on-159.jar"/>
+	<classpathentry kind="lib" path="bctls-jdk15on-159.jar"/>
+	<classpathentry kind="lib" path="bcpkix-jdk15on-159.jar"/>
+	<classpathentry kind="lib" path="bcmail-jdk15on-159.jar"/>
+	<classpathentry kind="lib" path="bcpg-jdk15on-159 (1).jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

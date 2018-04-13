@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import javax.net.ssl.SSLSocketFactory;
+
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -18,6 +20,10 @@ public class DataApplication
 	private int sleepTime = 0;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
+	private String certificateSigningRequestPath = "client.csr";
+	private String clientKeyFilePath = "client.key";
+	private String clientCertificateFilePath = "client.crt";
+	private String password = "password";
 	
 	private int[][] allData = new int[ROW_COUNT][COLUMN_COUNT];
 	
@@ -95,6 +101,17 @@ public class DataApplication
 		String clientId = "Transfer_Speed_Test";
 
 		MemoryPersistence persistence = new MemoryPersistence();
+		SSLSocketFactory sslFactory = null;
+		
+		try 
+		{
+			sslFactory = SSLFactory.getSocketFactory(certificateSigningRequestPath, clientCertificateFilePath, clientKeyFilePath, password);
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+			System.exit(0);
+		}
 		
 		int qos = 2;
 
@@ -108,14 +125,24 @@ public class DataApplication
 				
 				try 
 				{
-					MqttConnectOptions connOpts = new MqttConnectOptions();
+					MqttConnectOptions connectionOptions = new MqttConnectOptions();
 					MqttClient client = new MqttClient(broker, clientId, persistence);
 					MqttMessage message = new MqttMessage(content.getBytes());
 
-					connOpts.setCleanSession(true);
+					// Testing new options
+					connectionOptions.setUserName("username");
+					connectionOptions.setPassword(password.toCharArray());
+					
+					connectionOptions.setConnectionTimeout(60);
+					connectionOptions.setKeepAliveInterval(60);
+					connectionOptions.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1);
+					connectionOptions.setSocketFactory(sslFactory);
+					// end testing of new options
+
+					connectionOptions.setCleanSession(true);
 
 					System.out.println("Connecting to broker: " + broker);
-					client.connect(connOpts);
+					client.connect(connectionOptions);
 					System.out.println("Connected");
 
 					System.out.println("Publishing message: " + content);
