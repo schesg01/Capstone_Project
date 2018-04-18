@@ -4,7 +4,8 @@ import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WeatherOSGi {
+public class WeatherOSGi implements DataServiceListener{
+	public DataService dataservice;
 
     private static final Logger s_logger = LoggerFactory.getLogger(WeatherOSGi.class);
 
