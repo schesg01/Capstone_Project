@@ -97,7 +97,7 @@ public class DataApplication
 	{
 		String topic = "Transfer_Data";
 		String content = "Test Message";
-		String broker = "tcp://192.168.0.111:1883";
+		String broker = "ssl://192.168.0.111:1883";
 		String clientId = "Transfer_Speed_Test";
 
 		MemoryPersistence persistence = new MemoryPersistence();
