@@ -20,7 +20,7 @@ public class DataApplication
 	private int sleepTime = 0;
 	private final int COLUMN_COUNT = 3;
 	private final int ROW_COUNT = 5;
-	private String certificateSigningRequestPath = "./certs/client.csr";
+	private String certificateSigningRequestPath = "./certs/client.pem";
 	private String clientKeyFilePath = "./certs/client.key";
 	private String clientCertificateFilePath = "./certs/client.crt";
 	private String password = "password";
