@@ -18,11 +18,11 @@ public class DataApplication
 	private Clock clock = null;
 	private final String FILENAME = "./data/data.txt";
 	private int sleepTime = 0;
-	private final int COLUMN_COUNT = 3;
-	private final int ROW_COUNT = 5;
+	private final int COLUMN_COUNT = 1;
+	private final int ROW_COUNT = 1;
 	private String certificateSigningRequestPath = "./certs/client.pem";
 	private String clientKeyFilePath = "./certs/client.key";
-	private String clientCertificateFilePath = "./certs/client.crt";
+	private String clientCertificateFilePath = "./Kura/ca.crt";
 	private String password = "password";
 	
 	private int[][] allData = new int[ROW_COUNT][COLUMN_COUNT];
@@ -95,10 +95,12 @@ public class DataApplication
 	
 	void start()
 	{
-		String topic = "Transfer_Data";
+		String topic = "MQTT Examples";
 		String content = "Test Message";
-		String broker = "ssl://192.168.0.111:1883";
-		String clientId = "Transfer_Speed_Test";
+		//String broker = "ssl://192.168.0.111:1883";
+		//String broker = "tcp://192.168.0.107:1883";
+		String broker = "ssl://192.168.0.107:8883";
+		String clientId = "JavaSample";
 
 		MemoryPersistence persistence = new MemoryPersistence();
 		SSLSocketFactory sslFactory = null;
@@ -117,6 +119,7 @@ public class DataApplication
 
 		clock.restart();
 		
+		
 		for (int currentRow = 0; currentRow < ROW_COUNT; currentRow++) 
 		{
 			for (int currentCol = 0; currentCol < COLUMN_COUNT; currentCol++) 
@@ -125,21 +128,17 @@ public class DataApplication
 				
 				try 
 				{
-					MqttConnectOptions connectionOptions = new MqttConnectOptions();
 					MqttClient client = new MqttClient(broker, clientId, persistence);
+					MqttConnectOptions connectionOptions = new MqttConnectOptions();
 					MqttMessage message = new MqttMessage(content.getBytes());
 
-					// Testing new options
+					connectionOptions.setCleanSession(true);
 					connectionOptions.setUserName("username");
 					connectionOptions.setPassword(password.toCharArray());
-					
 					connectionOptions.setConnectionTimeout(60);
 					connectionOptions.setKeepAliveInterval(60);
 					connectionOptions.setMqttVersion(MqttConnectOptions.MQTT_VERSION_3_1);
 					connectionOptions.setSocketFactory(sslFactory);
-					// end testing of new options
-
-					connectionOptions.setCleanSession(true);
 
 					System.out.println("Connecting to broker: " + broker);
 					client.connect(connectionOptions);

@@ -30,7 +30,7 @@ public class SSLFactory
 		//while (bufferedInputStream.available() > 0)
 		{
 			caCertificate = (X509Certificate) certificateFactory.generateCertificate(bufferedInputStream);
-			System.out.println(caCertificate.toString());
+			//System.out.println(caCertificate.toString());
 		}
 
 		bufferedInputStream = new BufferedInputStream(new FileInputStream(clientCertificateFilePath));
@@ -39,7 +39,7 @@ public class SSLFactory
 		while (bufferedInputStream.available() > 0)
 		{
 			certificate = (X509Certificate) certificateFactory.generateCertificate(bufferedInputStream);
-			System.out.println(caCertificate.toString());
+			//System.out.println(caCertificate.toString());
 		}
 
 		PEMParser pemParser = new PEMParser(new FileReader(clientKeyFilePath));
@@ -76,6 +76,7 @@ public class SSLFactory
 		kmf.init(ks, password.toCharArray());
 
 		SSLContext context = SSLContext.getInstance("TLSv1.2");
+		//SSLContext context = SSLContext.getInstance("SSLv3");
 		context.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 
 		return context.getSocketFactory();

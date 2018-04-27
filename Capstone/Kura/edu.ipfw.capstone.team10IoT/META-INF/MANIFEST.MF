@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Team10IoT
+Bundle-SymbolicName: edu.ipfw.capstone.team10IoT
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.service.component;version="1.2.2",
+ org.slf4j
+Service-Component: OSGI-INF/component.xml
