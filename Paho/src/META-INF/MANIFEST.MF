@@ -1,0 +1,2 @@
+Main-Class: pi_zero.Main
+Class-Path: /home/pi/paho/org.eclipse.paho.client.mqttv3-1.2.1-20180313.040548-111.jar
